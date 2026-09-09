@@ -1,15 +1,44 @@
+// Namn: Abdulrahman Hendieh
+// liuID = abdhe895
+
 #include<iostream>
 #include<grid.h>
 #include<lifeutil.h>
 #include<fstream>
 
-
+/**
+ * Displays the welcome message and rules of the Game of Life simulation.
+ */
 void welcome();
+
+/**
+ * Reads grid dimensions and cell data from a file to initialize the colony.
+ */
 void move_to_Grid(std::ifstream& chosenFile, Grid<char>& colony);
+
+/**
+ * Counts and returns the number of living neighbor cells ('X') around a specific position.
+ */
 int numneighbor(const Grid<char>& colony, int bacteriaPositionRow, int bacteriaPositionColumn);
+
+/**
+ * Advances the colony to its next state based on the Game of Life rules.
+ */
 void nextGeneration(Grid<char>& colony);
+
+/**
+ * Outputs the current state of the grid colony to the console.
+ */
 void drawColony(Grid<char>& colony);
+
+/**
+ * Runs an animated simulation for a specified number of generations.
+ */
 void runSimulation(Grid<char>& colony, int numGeneration);
+
+/**
+ * Handles the main user interface loop for stepping, animating, or quitting the simulation.
+ */
 void userMeny(Grid<char>& colony);
 
 
@@ -95,7 +124,7 @@ void drawColony(Grid<char>& colony){
 
 
 void nextGeneration(Grid<char>& colony){
-    Grid<char> tempColony;
+
     tempColony.resize(colony.numRows(), colony.numCols());
 
     for (int row = 0; row < colony.numRows(); row++){
