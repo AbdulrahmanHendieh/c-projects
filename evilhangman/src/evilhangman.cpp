@@ -26,17 +26,17 @@ int main() {
 }
 
 
-set<string> dictContainer(){
+set<string> dict_container(){
 
-    string filePath = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/evilhangman/res/dictionary.txt";
+    string file_path = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/evilhangman/res/dictionary.txt";
     string word;
-    fstream dictFile(filePath);
-    set<string> wordContainer;
+    fstream dict_file(file_path);
+    set<string> word_container;
 
-    while (dictFile >> word){
-        wordContainer.insert(word);
+    while (dict_file >> word){
+        word_container.insert(word);
     }
-    return wordContainer;
+    return word_container;
 }
 
 map<int, set<string>> dictMapContainer(){
@@ -118,6 +118,25 @@ bool answer_show_word_list(){
 
     }
     }
+
+}
+
+set<string> get_words_of_length(int word_length, map<int, set<string>> dict_map_container){
+
+    auto key = dict_map_container.find(word_length);
+
+    if (key != dict_map_container.end()){
+        return key -> second;
+    }
+    return {};
+}
+
+void Gameloop(){
+    set<string> englis_word_dict = dictContainer();
+    map<int, set<string>> word_group_by_length = dictMapContainer();
+    int word_length = get_word_length(word_group_by_length);
+    int number_gusess = get_number_guessing();
+    bool show_word_list = answer_show_word_list();
 
 }
 

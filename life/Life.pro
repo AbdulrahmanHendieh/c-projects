@@ -46,3 +46,5 @@ win32 {
 }
 
 cache()
+
+DISTFILES +=
