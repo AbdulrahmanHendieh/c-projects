@@ -124,7 +124,7 @@ void drawColony(Grid<char>& colony){
 
 
 void nextGeneration(Grid<char>& colony){
-
+    Grid<char> tempColony;
     tempColony.resize(colony.numRows(), colony.numCols());
 
     for (int row = 0; row < colony.numRows(); row++){
@@ -165,7 +165,6 @@ void nextGeneration(Grid<char>& colony){
 
 void runSimulation(Grid<char>& colony, int numGeneration){
 
-
     for (int generation = 1; generation <= numGeneration; generation++){
         clearConsole();
         std::cout<< "generation: " << generation << std::endl;
@@ -205,22 +204,6 @@ void userMeny(Grid<char>& colony){
         }
     } while(action != 'q');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
