@@ -68,7 +68,7 @@ int main(){
 
 
 map<int, vector<string>> get_english_word_devided_by_length(){
-    string filename = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/evilhangman/res/di.txt";
+    string filename = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/evilhangman/res/dictionary.txt";
     ifstream english_dict(filename);
     string word;
     map<int, vector<string>> english_word_devided_by_length;
@@ -111,20 +111,14 @@ int get_number_guesses(){
 
 
 bool want_to_see_word_list(){
-
     while (true){
-        char action = controll_input<char>("Do you like to see a word list afret guessing, (a: yes, b: no): ");
-        switch (action) {
-        case 'a':
-        case 'A':
-            return true;
-        case 'b':
-        case 'B':
-            return false;
-        default:
-            cout << "invalid input";
-            break;
+        string action = controll_input<string>("Do you like to see a word list after guessing, (a: yes, b: no): ");
+        if (action.length() == 1){
+            char c = tolower(action[0]);
+            if (c == 'a') return true;
+            if (c == 'b') return false;
         }
+        cout << "invalid input" << endl;
     }
 }
 
@@ -197,20 +191,14 @@ pair<string, vector<string>> get_largest_word_familliy(const map<string, vector<
 
 
 bool play_again(){
-
     while (true){
-        char action = controll_input<char>("Do you like to play again? (a: yes, b: no) ");
-        switch (action) {
-        case 'a':
-        case 'A':
-            return true;
-        case 'b':
-        case 'B':
-            return false;
-        default:
-            cout << "invalid input";
-            break;
+        string action = controll_input<string>("Do you like to play again? (a: yes, b: no) ");
+        if (action.length() == 1){
+            char c = tolower(action[0]);
+            if (c == 'a') return true;
+            if (c == 'b') return false;
         }
+        cout << "invalid input" << endl;
     }
 }
 
