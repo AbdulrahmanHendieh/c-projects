@@ -1,3 +1,6 @@
+//namen: Abdulrahman Hendieh
+// LIUID: abdhe895
+
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -7,8 +10,14 @@
 using namespace std;
 
 
+
+//Opens the dictionary file from the local patt reads al English words line by line and stores them in a set fo fast lookups.
 set<string> englishWordContainer();
+
+//Unpacks and prints the resulting word chain stored in the stack in reverse order to display the transformation path from the start word to the target word.
 void printWordChain(stack<string> wordChain);
+
+//Finds the shortest word ladder between two words using a breadth-first search (BFS) queue containing stacks, ensuring each valid neighbor is visited only once.
 void wordChain(string firstWord, string secWord, set<string>& englishWordDict);
 
 const char ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
@@ -72,7 +81,7 @@ void wordChain(string firstWord, string secWord, set<string>& englishWordDict){
 
 set<string> englishWordContainer(){
     set<string> englishWordSet;
-    string fileName = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/wordchain/res/dictionary.txt";
+    string fileName = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/labb2/wordchain/res/dictionary.txt";
     ifstream englishDict(fileName);
     string word;
 
