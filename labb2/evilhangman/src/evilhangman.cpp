@@ -68,7 +68,7 @@ int main(){
 
 
 map<int, vector<string>> get_english_word_devided_by_length(){
-    string filename = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/evilhangman/res/dictionary.txt";
+    string filename = "dictionary.txt";
     ifstream english_dict(filename);
     string word;
     map<int, vector<string>> english_word_devided_by_length;
@@ -112,7 +112,7 @@ int get_number_guesses(){
 
 bool want_to_see_word_list(){
     while (true){
-        string action = controll_input<string>("Do you like to see a word list after guessing, (a: yes, b: no): ");
+        string action = controll_input<string>("Do you like to see  number of word left after guessing, (a: yes, b: no): ");
         if (action.length() == 1){
             char c = tolower(action[0]);
             if (c == 'a') return true;
@@ -214,7 +214,7 @@ T controll_input(const string& prompt){
     return input;
 }
 
-void game_status(string& current_pattern, int number_guesses, const vector<string> word_list, bool show_word_list,const set<char>& marked_letters){
+void game_status(string& current_pattern, int number_guesses, int number_word_left, bool show_word_list,const set<char>& marked_letters){
     cout << "------------------------------------------" << endl;
 
     cout << "Guessed letters: (";
@@ -228,11 +228,7 @@ void game_status(string& current_pattern, int number_guesses, const vector<strin
     cout << "current pattern: " << current_pattern << endl;
 
     if (show_word_list){
-        cout << "word list: ";
-        for (const string& word: word_list){
-            cout << word << ", ";
-        }
-        cout << endl;
+        cout << "number word left: " << number_word_left << endl;
     }
 
 }
@@ -244,17 +240,19 @@ void game_loop(const map<int, vector<string>>& english_word_devided_by_length){
     int number_guesses = get_number_guesses();
     bool show_word_list = want_to_see_word_list();
     vector<string> word_list = get_word_list_of_choosen_length(word_length, english_word_devided_by_length);
+    int number_word_left = word_list.size();
     set<char> marked_letters;
     map<string, vector<string>> word_families;
 
 
     while (current_pattern.find('-') != string::npos && number_guesses > 0){
-        game_status(current_pattern, number_guesses, word_list, show_word_list, marked_letters);
+        game_status(current_pattern, number_guesses, number_word_left, show_word_list, marked_letters);
         char guessed_letter = get_guessed_letter(marked_letters);
         marked_letters.insert(guessed_letter);
         word_families = get_word_families(guessed_letter, current_pattern, word_list);
         auto [max_pattern, largest_family] = get_largest_word_familliy(word_families);
         word_list = largest_family;
+        number_word_left = largest_family.size();
 
 
         if (current_pattern == max_pattern){
