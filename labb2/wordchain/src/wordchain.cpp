@@ -81,7 +81,7 @@ void wordChain(string firstWord, string secWord, set<string>& englishWordDict){
 
 set<string> englishWordContainer(){
     set<string> englishWordSet;
-    string fileName = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/labb2/wordchain/res/dictionary.txt";
+    string fileName = "dictionary.txt";
     ifstream englishDict(fileName);
     string word;
 
