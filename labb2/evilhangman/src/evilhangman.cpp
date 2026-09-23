@@ -40,7 +40,7 @@ pair<string, vector<string>> get_largest_word_familliy(const map<string, vector<
 bool play_again();
 
 // Displays current game state including guessed letters, remaining guesses, and pattern
-void game_status(string& current_pattern, int number_guesses, const vector<string> word_list, bool show_word_list,const set<char>& marked_letters);
+void game_status(string& current_pattern, int number_guesses, int number_word_left, bool show_word_list,const set<char>& marked_letters);
 
 // Main game loop running until the player wins or runs out of guesses
 void game_loop(const map<int, vector<string>>& english_word_devided_by_length);
@@ -157,7 +157,7 @@ vector<string> get_word_list_of_choosen_length(int chosen_word_length, const map
 map<string, vector<string>> get_word_families(char guessed_letter, const string& current_pattern, const vector<string>& word_list){
     map<string, vector<string>> word_families;
 
-    for (string word: word_list){
+    for (const string& word: word_list){
         string pattern = current_pattern;
 
         for (size_t i = 0; i < word.length(); i++){

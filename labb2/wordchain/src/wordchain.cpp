@@ -15,10 +15,10 @@ using namespace std;
 set<string> englishWordContainer();
 
 //Unpacks and prints the resulting word chain stored in the stack in reverse order to display the transformation path from the start word to the target word.
-void printWordChain(stack<string> wordChain);
+void printWordChain(stack<string>& wordChain);
 
 //Finds the shortest word ladder between two words using a breadth-first search (BFS) queue containing stacks, ensuring each valid neighbor is visited only once.
-void wordChain(string firstWord, string secWord, set<string>& englishWordDict);
+void wordChain(const string& firstWord, const string& secWord, const set<string>& englishWordDict);
 
 const char ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -39,7 +39,7 @@ int main(){
 }
 
 
-void wordChain(string firstWord, string secWord, set<string>& englishWordDict){
+void wordChain(const string& firstWord, const string& secWord, const set<string>& englishWordDict){
 
     queue<stack<string>> wordChains;
     set<string> markedWord;
@@ -93,7 +93,7 @@ set<string> englishWordContainer(){
 }
 
 
-void printWordChain(stack<string> wordChain){
+void printWordChain(stack<string>& wordChain){
     cout << "Chain from data back to code:"<< endl;
     while (!wordChain.empty()){
         if (wordChain.size() == 1){
