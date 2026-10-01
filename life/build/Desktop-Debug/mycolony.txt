@@ -1,0 +1,17 @@
+10
+10
+----------
+----------
+----------
+----XXX---
+---XXX----
+----------
+----------
+----------
+----------
+----------
+
+# The Toad
+# A classic period-2 oscillator.
+# It consists of two parallel 3-cell rows that
+# expand and contract in an endless breathing cycle
