@@ -1,3 +1,6 @@
+// name: Abdulrahman Hendieh
+// LidID: abdhe895
+
 /**
  * Copyright (C) David Wolfe, 1999.  All rights reserved.
  * Ported to Qt and adapted for TDDD86, 2015.
@@ -29,6 +32,26 @@ public:
     virtual ~Unit(){}
 
     /*
+     * checkling if unit is still alive
+     * return deafult fasle;
+     */
+    virtual bool isAlive() const  {return false;}
+
+    /*
+     *
+     */
+    virtual void doCrash(){}
+
+    /*
+     *
+     */
+    virtual bool isToBeJunked() const {return false;}
+
+
+    virtual void draw(QGraphicsScene*) const {}
+
+
+    /*
     * Return Point representation of Unit
     */
     Point asPoint() const;
@@ -42,7 +65,7 @@ public:
     /*
     * Take one step closer to point
     */
-    void moveTowards(const Point&);
+    virtual void moveTowards(const Point&);
 
 
     /*

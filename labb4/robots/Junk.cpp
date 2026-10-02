@@ -14,3 +14,16 @@ void Junk::draw(QGraphicsScene *scene) const {
     scene->addEllipse(QRectF(corner.x * UNIT_WIDTH, corner.y * UNIT_HEIGHT,
                              JUNK_RADIUS, JUNK_RADIUS), QPen(), QBrush(JUNK_COLOR));
 }
+
+
+bool Junk::isAlive() const {
+    return false;
+}
+
+bool Junk::isToBeJunked() const {
+    return false;
+}
+
+void Junk::doCrash() {}
+
+void Junk::moveTowards(const Point&){}
