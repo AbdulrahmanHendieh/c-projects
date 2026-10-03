@@ -26,7 +26,8 @@ public:
     GameState(int numberOfRobots);
 
     ~GameState();
-
+    GameState(const GameState& other);
+    GameState& operator=(const GameState& other);
 
     /*
      * Clear and redraw entire playing field

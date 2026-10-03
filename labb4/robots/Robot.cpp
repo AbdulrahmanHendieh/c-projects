@@ -27,3 +27,6 @@ void Robot::draw(QGraphicsScene *scene) const {
 }
 
 
+Unit* Robot::clone() const {
+    return new Robot(*this);
+}

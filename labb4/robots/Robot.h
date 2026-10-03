@@ -35,7 +35,7 @@ public:
     */
     void draw(QGraphicsScene* scene) const override;
 
-
+    Unit* clone() const override;
 };
 
 #endif // ROBOT_H

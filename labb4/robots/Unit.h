@@ -31,6 +31,10 @@ public:
 
     virtual ~Unit(){}
 
+    virtual Unit* clone() const {
+        return new Unit(*this);
+    }
+
     /*
      * checkling if unit is still alive
      * return deafult fasle;

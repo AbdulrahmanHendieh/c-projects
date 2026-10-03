@@ -21,6 +21,10 @@ public:
     void doCrash() override;
     bool isToBeJunked() const override;
     bool isAlive() const override;
+
+
+    Unit* clone() const override;
+
 };
 
 #endif // JUNK_H

@@ -112,3 +112,27 @@ GameState::~GameState(){
     }
     units.clear();
 }
+
+GameState::GameState(const GameState& other){
+    for (Unit* const unit : other.units){
+        units.push_back(unit->clone());
+    }
+    hero = other.hero;
+}
+
+GameState& GameState::operator=(const GameState& other){
+    if (this != &other){
+
+        for (Unit* unit: units){
+            delete unit;
+        }
+        units.clear();
+    }
+
+    for (const Unit* unit: other.units){
+        units.push_back(unit->clone());
+    }
+    hero = other.hero;
+
+    return *this;
+}

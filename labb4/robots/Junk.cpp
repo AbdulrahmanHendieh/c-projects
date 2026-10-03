@@ -27,3 +27,7 @@ bool Junk::isToBeJunked() const {
 void Junk::doCrash() {}
 
 void Junk::moveTowards(const Point&){}
+
+Unit* Junk::clone() const{
+    return new Junk(*this);
+}
