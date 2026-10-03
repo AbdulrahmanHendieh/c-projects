@@ -127,12 +127,12 @@ GameState& GameState::operator=(const GameState& other){
             delete unit;
         }
         units.clear();
-    }
+
 
     for (const Unit* unit: other.units){
         units.push_back(unit->clone());
     }
     hero = other.hero;
-
+    }
     return *this;
 }
