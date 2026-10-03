@@ -31,6 +31,10 @@ public:
 
     virtual ~Unit(){}
 
+    /*
+     * Creates a heap allocated copy of the unit.
+     * Returns a pointer to the new created object.
+     */
     virtual Unit* clone() const {
         return new Unit(*this);
     }
@@ -42,16 +46,21 @@ public:
     virtual bool isAlive() const  {return false;}
 
     /*
-     *
+     * Handles the crash behavior for the unit.
+     * Does nothing by default for base units.
      */
     virtual void doCrash(){}
 
     /*
-     *
+     * Checks if the unit is marked as crashed (to be turned into junk).
+     * Returns false by default for base units.
      */
     virtual bool isToBeJunked() const {return false;}
 
-
+    /*
+     * Draws the unit onto the provided graphics scene.
+     * Does nothing by default for base units.
+     */
     virtual void draw(QGraphicsScene*) const {}
 
 

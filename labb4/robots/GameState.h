@@ -1,3 +1,6 @@
+// name: Abdulrahman Hendieh
+// liu Id: abdhe895
+
 /**
  * Copyright (C) David Wolfe, 1999.  All rights reserved.
  * Ported to Qt and adapted for TDDD86, 2015.
@@ -25,8 +28,19 @@ public:
      */
     GameState(int numberOfRobots);
 
+    /*
+     * Destructor that cleans up all dynamically allocated units to prevent memory leaks.
+     */
     ~GameState();
+
+    /*
+     * Copy constructor that creates a deep copy of another GameState object
+     */
     GameState(const GameState& other);
+
+    /*
+     * safely replaces the current GameStates cotents with a deep copy of another GameState object
+     */
     GameState& operator=(const GameState& other);
 
     /*
