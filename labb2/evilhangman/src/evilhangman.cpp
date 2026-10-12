@@ -68,7 +68,7 @@ int main(){
 
 
 map<int, vector<string>> get_english_word_devided_by_length(){
-    string filename = "dictionary.txt";
+    string filename = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/labb2/evilhangman/res/dictionary.txt";
     ifstream english_dict(filename);
     string word;
     map<int, vector<string>> english_word_devided_by_length;

@@ -18,7 +18,7 @@
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-    string filename = "tsp10.txt";
+    string filename = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/labb3/tsp/res/mona-50k.txt";
     ifstream input;
     input.open(filename);
 
