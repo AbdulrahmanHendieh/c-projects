@@ -1,3 +1,8 @@
+
+
+//name: Abdulrahman Hendieh
+// LiuID: abdhe895
+
 // You will edit and turn in this CPP file.
 // Also remove these comments here and add your own.
 // TODO: remove this comment header and replace with your own
@@ -9,18 +14,32 @@
 #include "Boggle.h"
 #include "bogglemain.h"
 #include "strlib.h"
-// TODO: include any other header files you need
-//FYCLIOMGORILHJHU
 
 
+// Displays the Boggle board in the console.
 void show_board(Boggle& boggle);
-bool is_valid_letter(string chosen_letters);
+
+// Prompts the user to enter 16 valid English letters for a custom board.
 string get_chosen_letters();
+
+// Checks whether all characters in the given string are alphabetic letters.
+bool is_valid_letter(string chosen_letters);
+
+// Prompts the user to input a word and returns it in uppercase.
 string get_word_from_user(Boggle& boggle);
+
+// Displays the human player's current score in the console.
 void show_human_score(Boggle& boggle);
+
+// Displays the computer's final score in the console.
 void show_computer_score(Boggle& boggle);
+
+// Prints the set of valid words found by the human player.
 void show_human_words(Boggle& boggle);
+
+// Prints the set of valid words found by the computer.
 void show_computer_words(Boggle& boggle);
+
 /*
  * Plays one game of Boggle using the given boggle game state object.
  */
@@ -71,12 +90,22 @@ void playOneGame(Boggle& boggle) {
     cout << "My words" << "(" << boggle.get_computer_words().size() << "): ";
     show_computer_words(boggle);
     show_computer_score(boggle);
-    cout << "Ha ha ha, I destroyed you. Better luck next time, puny human!";
+
+    if (boggle.get_computer_score() < boggle.get_human_score()){
+        cout << "WOW, you defeated me! Congratulations!" << endl;
+    }
+
+    else if (boggle.get_computer_score() > boggle.get_human_score()){
+        cout << "Ha ha ha, I destroyed you. Better luck next time, puny human!";
+    }
+    else{
+        cout << "both have same score no one wins!" << endl;
+    }
 
 
 }
 
-// showing the board in console for the player
+
 void show_board(Boggle& boggle){
 
     for (int row = 0; row < boggle.BOARD_SIZE; row++){
@@ -88,7 +117,6 @@ void show_board(Boggle& boggle){
     cout << endl;
 }
 
-// taking the 16 letters from the user and verify that the letters is in alpahpet using is_vlaid_letter function and the length of the string is 16
 string get_chosen_letters(){
     string chosen_letters;
 
@@ -99,7 +127,6 @@ string get_chosen_letters(){
     return chosen_letters;
 }
 
-// verify that the letters is in alpahpet
 bool is_valid_letter(string chosen_letters){
     for (char letter: chosen_letters){
         if (!isalpha(letter)){
@@ -111,7 +138,6 @@ bool is_valid_letter(string chosen_letters){
 }
 
 
-// taking the word from userz
 string get_word_from_user(Boggle& boggle){
     string word;
     cout << "Type a word (or press Enter to end your turn): ";
@@ -122,13 +148,11 @@ string get_word_from_user(Boggle& boggle){
 
 
 
-// Display human score in consloe
 void show_human_score(Boggle& boggle){
     int human_score = boggle.get_human_score();
     cout << "Your Score: (" << human_score << ")" << endl;
 }
 
-// Display computer Score in Console
 void show_computer_score(Boggle& boggle){
     int computer_score = boggle.get_computer_score();
     cout << "My Score: (" << computer_score << ")" << endl;

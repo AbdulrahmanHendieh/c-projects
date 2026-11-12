@@ -1,3 +1,8 @@
+
+//name: Abdulrahman Hendieh
+// LiuID: abdhe895
+
+
 // This is the .cpp file you will edit and turn in.
 // We have provided a minimal skeleton for you,
 // but you must finish it as described in the spec.
@@ -13,38 +18,32 @@
 #include "strlib.h"
 #include<set>
 
-static const int NUM_CUBES = 16;   // the number of cubes in the game
-static const int CUBE_SIDES = 6;   // the number of sides on each cube
-static string CUBES[NUM_CUBES] = {        // the letters on all 6 sides of every cube
+static const int NUM_CUBES = 16;
+static const int CUBE_SIDES = 6;
+static string CUBES[NUM_CUBES] = {
    "AAEEGN", "ABBJOO", "ACHOPS", "AFFKPS",
    "AOOTTW", "CIMOTU", "DEILRX", "DELRVY",
    "DISTTY", "EEGHNW", "EEINSU", "EHRTVW",
    "EIOSST", "ELRTTY", "HIMNQU", "HLNNRZ"
 };
 
-// TODO: implement the members you declared in Boggle.h
 
-// return humanscore
 int Boggle::get_human_score() const {
     return human_score;
 }
 
-// return comPuterScore
 int Boggle::get_computer_score() const {
     return computer_score;
 }
 
-// return palyer words
 Set<string> Boggle::get_human_words() const {
     return human_word;
 }
 
-// return the computer words
 Set<string> Boggle::get_computer_words() const {
     return computer_word;
 }
 
-// filling the grid with letters the player chose
 void Boggle::set_up_custom_board(string chosen_letters){
     int index = 0;
     for (int row = 0; row < BOARD_SIZE; row++){
@@ -54,7 +53,6 @@ void Boggle::set_up_custom_board(string chosen_letters){
         }
     }
 }
-// filling the grid with letters the random letters from cubes after shuffle
 
 void Boggle::set_up_random_board(){
     string cubes_copy[NUM_CUBES];
@@ -72,7 +70,6 @@ void Boggle::set_up_random_board(){
     }
 }
 
-// generating board depends on what the player choose
 void Boggle::create_custom_board(string chosen_letters){
     board.resize(BOARD_SIZE, BOARD_SIZE);
     chosen_letters = toUpperCase(chosen_letters);
@@ -84,7 +81,6 @@ void Boggle::create_custom_board(string chosen_letters){
     }
 }
 
-// checking if the word tahr user typed in is valid english word and have at least 4 letters
 string Boggle::check_word(string word){
     word = toUpperCase(word);
 
