@@ -45,6 +45,8 @@ Set<string> Boggle::get_computer_words() const {
 }
 
 void Boggle::set_up_custom_board(string chosen_letters){
+    board.resize(BOARD_SIZE, BOARD_SIZE);
+    chosen_letters = toUpperCase(chosen_letters);
     int index = 0;
     for (int row = 0; row < BOARD_SIZE; row++){
         for (int col = 0; col < BOARD_SIZE; col++){
@@ -56,6 +58,8 @@ void Boggle::set_up_custom_board(string chosen_letters){
 
 void Boggle::set_up_random_board(){
     string cubes_copy[NUM_CUBES];
+    board.resize(BOARD_SIZE, BOARD_SIZE);
+
     for (int i = 0; i < NUM_CUBES; i++){
         cubes_copy[i] = CUBES[i];
     }
@@ -70,60 +74,31 @@ void Boggle::set_up_random_board(){
     }
 }
 
-void Boggle::create_custom_board(string chosen_letters){
-    board.resize(BOARD_SIZE, BOARD_SIZE);
-    chosen_letters = toUpperCase(chosen_letters);
-
-    if (chosen_letters.empty()){
-        set_up_random_board();
-    } else{
-        set_up_custom_board(chosen_letters);
-    }
-}
-
-string Boggle::check_word(string word){
-    word = toUpperCase(word);
-
-    if (!dict.contains(word)){
-        return "That word is not in the dictionary.";
-    }
-
-    if (word.length() < 4){
-        return "That word is not long enough.";
-    }
 
 
-    if (human_word.contains(word)) {
-        return "You have already guessed that word.";
-    }
 
-    return word;
-}
 
 void Boggle::load_english_word(){
     dict.addWordsFromFile(DICTIONARY_FILE);
 }
 
-bool Boggle::search_human_word_in_board(string word){
+bool Boggle::human_word_is_in_board(const string& word) const{
 
   Grid<bool> marked_currently_used_letters(BOARD_SIZE, BOARD_SIZE);
 
     for (int row = 0; row < BOARD_SIZE; row++){
         for (int col = 0; col < BOARD_SIZE; col++){
             if (search_human_helper_func(word, row, col, marked_currently_used_letters)){
-                human_word.insert(word);
-                human_score += word.length() - 3;
                 return true;
 
             }
         }
-
     }
     return false;
 
 }
 
-bool Boggle::search_human_helper_func(string word, int row, int col, Grid<bool>& marked_letters){
+bool Boggle::search_human_helper_func(const string& word, int row, int col, Grid<bool>& marked_letters) const {
 
     if (word.empty()){
         return true;
@@ -177,7 +152,7 @@ void Boggle::search_computer_helper_func(int row, int col,  Grid<bool>& marked_l
         return;
     }
 
-    if (current_word.length() >= 4 && dict.contains(current_word) && !computer_word.contains(current_word) && !human_word.contains(current_word)){
+    if (current_word.length() >= MIN_WORD_LENGTH && dict.contains(current_word) && !computer_word.contains(current_word) && !human_word.contains(current_word)){
         computer_word.insert(current_word);
         computer_score += current_word.length() - 3;
     }
@@ -208,10 +183,46 @@ void Boggle::reset() {
 
 
 
+bool Boggle:: is_valid_letter(const string& chosen_letters)const {
+
+    if (chosen_letters.length() != BOARD_SIZE * BOARD_SIZE){
+        return false;
+    }
+
+    for (char letter: chosen_letters){
+        if (!isalpha(letter)){
+            return false;
+        }
+    }
+    return true;
+
+}
 
 
+bool Boggle::check_word_length(const string& word) const {
+    return word.length() >= MIN_WORD_LENGTH;
+}
 
 
+bool Boggle::is_in_dictionary(const string& word) const {
+    return dict.contains(word);
+}
+
+
+bool Boggle::already_found(const string& word) const {
+    return human_word.contains(word);
+}
+
+
+void Boggle:: update_human_status(const string& word){
+    human_word.insert(word);
+    human_score += word.length() - 3;
+
+}
+
+char Boggle::get_letter_in_board(int row, int col) const {
+    return board.get(row, col);
+}
 
 
 

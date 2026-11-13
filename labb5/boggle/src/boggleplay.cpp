@@ -20,13 +20,12 @@
 void show_board(Boggle& boggle);
 
 // Prompts the user to enter 16 valid English letters for a custom board.
-string get_chosen_letters();
+string get_chosen_letters(const Boggle& boggle);
 
-// Checks whether all characters in the given string are alphabetic letters.
-bool is_valid_letter(string chosen_letters);
+
 
 // Prompts the user to input a word and returns it in uppercase.
-string get_word_from_user(Boggle& boggle);
+string get_word_from_user();
 
 // Displays the human player's current score in the console.
 void show_human_score(Boggle& boggle);
@@ -40,20 +39,26 @@ void show_human_words(Boggle& boggle);
 // Prints the set of valid words found by the computer.
 void show_computer_words(Boggle& boggle);
 
+// Validates the player's guessed word, displays feedback, and updates the score if valid.
+void handle_human_word(Boggle& boggle, const string& word);
+
+// Executes the computer's turn, displays its found words and score, and announces the winner.
+void handl_computer_word(Boggle& boggle);
+
 /*
  * Plays one game of Boggle using the given boggle game state object.
  */
 void playOneGame(Boggle& boggle) {
+    boggle.load_english_word();
     clearConsole();
     boggle.reset();
     string word;
-    boggle.load_english_word();
 
     if (yesOrNo("do you wnat to gernrate a random board")){
-        boggle.create_custom_board("");
+        boggle.set_up_random_board();
     }else{
-        string chosen_letters = get_chosen_letters();
-        boggle.create_custom_board(chosen_letters);
+        string chosen_letters = get_chosen_letters(boggle);
+        boggle.set_up_custom_board(chosen_letters);
     }
     cout << "it is your turn!" << endl;
 
@@ -63,44 +68,16 @@ void playOneGame(Boggle& boggle) {
     show_human_words(boggle);
     show_human_score(boggle);
 
-    word = get_word_from_user(boggle);
+    word = get_word_from_user();
 
     if (word.empty()){
         break;
     }
 
-    string check_result = boggle.check_word(word);
-
-    if (check_result != word) {
-       cout << check_result << endl;
+    handle_human_word(boggle, word);
     }
 
-    else if(boggle.search_human_word_in_board(word)){
-        cout << "You found a new word!: " << word << endl;
-    }
-
-    else{
-        cout << "That word can't be formed on this board." << endl;
-    }
-
-    }
-
-    cout << "It's my turn!" << endl;
-    boggle.search_computer_word_in_board();
-    cout << "My words" << "(" << boggle.get_computer_words().size() << "): ";
-    show_computer_words(boggle);
-    show_computer_score(boggle);
-
-    if (boggle.get_computer_score() < boggle.get_human_score()){
-        cout << "WOW, you defeated me! Congratulations!" << endl;
-    }
-
-    else if (boggle.get_computer_score() > boggle.get_human_score()){
-        cout << "Ha ha ha, I destroyed you. Better luck next time, puny human!";
-    }
-    else{
-        cout << "both have same score no one wins!" << endl;
-    }
+    handl_computer_word(boggle);
 
 
 }
@@ -110,40 +87,31 @@ void show_board(Boggle& boggle){
 
     for (int row = 0; row < boggle.BOARD_SIZE; row++){
         for (int col = 0; col < boggle.BOARD_SIZE; col++){
-            cout << boggle.board[row][col];
+            cout << boggle.get_letter_in_board(row, col);
         }
         cout << endl;
     }
     cout << endl;
 }
 
-string get_chosen_letters(){
+string get_chosen_letters(const Boggle& boggle){
     string chosen_letters;
 
     do{
         cout << "please type in 16 valid english letters: "<< endl;
         getline(cin, chosen_letters);
-    } while (!is_valid_letter(chosen_letters) || chosen_letters.length() != 16);
+    } while (!boggle.is_valid_letter(chosen_letters));
     return chosen_letters;
 }
 
-bool is_valid_letter(string chosen_letters){
-    for (char letter: chosen_letters){
-        if (!isalpha(letter)){
-            return false;
-        }
-    }
-    return true;
-
-}
 
 
-string get_word_from_user(Boggle& boggle){
+
+string get_word_from_user(){
     string word;
     cout << "Type a word (or press Enter to end your turn): ";
     getline(cin, word);
-    word = toUpperCase(word);
-    return word;
+    return toUpperCase(word);
 }
 
 
@@ -162,7 +130,7 @@ void show_human_words(Boggle& boggle){
     Set<string> human_words = boggle.get_human_words();
     cout << "{ ";
 
-    for (string word : human_words){
+    for (const string& word : human_words){
         cout << '"' << word << '"' << ",";
     }
     cout << "}" << endl;
@@ -173,7 +141,7 @@ void show_computer_words(Boggle& boggle){
     Set<string> computer_words = boggle.get_computer_words();
     cout << "{ ";
 
-    for (string word : computer_words){
+    for (const string& word : computer_words){
         cout << '"' << word << '"' << ",";
 
     }
@@ -181,6 +149,49 @@ void show_computer_words(Boggle& boggle){
 }
 
 
+void handle_human_word(Boggle& boggle, const string& word) {
+    if (!boggle.is_in_dictionary(word)) {
+        cout << "That word is not in the dictionary." << endl;
+    }
+
+    else if (!boggle.check_word_length(word)) {
+        cout << "That word is not long enough." << endl;
+    }
+
+    else if (boggle.already_found(word)) {
+        cout << "You have already guessed that word." << endl;
+    }
+
+    else if (!boggle.human_word_is_in_board(word)) {
+        cout << "That word can't be formed on this board." << endl;
+    }
+
+    else {
+        boggle.update_human_status(word);
+        cout << "You found a new word! \"" << word << "\"" << endl;
+
+    }
+
+}
+
+void handl_computer_word(Boggle& boggle){
+    cout << "It's my turn!" << endl;
+    boggle.search_computer_word_in_board();
+    cout << "My words" << "(" << boggle.get_computer_words().size() << "): ";
+    show_computer_words(boggle);
+    show_computer_score(boggle);
+
+    if (boggle.get_computer_score() < boggle.get_human_score()){
+        cout << "WOW, you defeated me! Congratulations!" << endl;
+    }
+
+    else if (boggle.get_computer_score() > boggle.get_human_score()){
+        cout << "Ha ha ha, I destroyed you. Better luck next time, puny human!";
+    }
+    else{
+        cout << "both have same score no one wins!" << endl;
+    }
+}
 
 
 

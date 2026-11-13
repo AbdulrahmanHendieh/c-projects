@@ -24,7 +24,7 @@ public:
     const string DICTIONARY_FILE = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/labb5/boggle/res/EnglishWords.dat";
     const int MIN_WORD_LENGTH = 4;
     const int BOARD_SIZE = 4;
-    Grid<char> board;
+
 
 
     // Retuns the human player's current score.
@@ -39,24 +39,43 @@ public:
     // Returns the set of valid words found by the computer.
     Set<string> get_computer_words() const;
 
-    // Initializes the game board using custom letters or random cubes if empty.
-    void create_custom_board(string chosen_letters);
+    // Populates the board grid with the 16 user provided letters.
+    void set_up_custom_board(string chosen_letters);
 
+    // Populates the board grid by shuffling and rolling the standard Boggle cube
+    void set_up_random_board();
 
-    // Validates a word against the dictionary, minimum length, and previous guesses.
-    string check_word(string word);
 
     // Loads the English dictionary words from file into the lexicon.
     void load_english_word();
 
-    // Searches the board for the given human word and updates score if found.
-    bool search_human_word_in_board(string word);
+    // return true of human word is in board
+    bool human_word_is_in_board(const string &word) const;
 
     // Finds all remaining valid words on the board for the computer.
     void search_computer_word_in_board();
 
     // Resets scores and fond word sets for a new game.
     void reset();
+
+    // Checks whether all characters in the given string are alphabetic letters.
+    bool is_valid_letter(const string& chosen_letters) const;
+
+    // checking word length if length less then 4 then return false other way retrurn true
+
+    bool check_word_length(const string& word) const;
+
+    // Checks whether the given word exists in the English dictionary.
+    bool is_in_dictionary(const string& word) const;
+
+    // Checks whether the human player has already found the given word.
+    bool already_found(const string& word) const;
+
+    // Adds a valid word to the human player's word set and updates their score.
+    void update_human_status(const string& word);
+
+    // Returns the character located at (row, col) on the game board.
+    char get_letter_in_board(int row, int col) const;
 
 
 
@@ -66,15 +85,11 @@ private:
     int computer_score = 0;
     Set<string> human_word;
     Set<string> computer_word;
+    Grid<char> board;
 
-    // Populates the board grid with the 16 user provided letters.
-    void set_up_custom_board(string chosen_letters);
-
-    // Populates the board grid by shuffling and rolling the standard Boggle cube
-    void set_up_random_board();
 
     // Recursive helper using backtracking to verify if a word can be formed from (ro, col).
-    bool search_human_helper_func(string word,int row,int col, Grid<bool>& marked_letters);
+    bool search_human_helper_func(const string& word,int row,int col, Grid<bool>& marked_letters) const ;
 
     // Recursive helper using backtracking and prefix pruning to collect all valid words from (row, col).
     void search_computer_helper_func(int row,int col, Grid<bool>& marked_letters, string current_word);
