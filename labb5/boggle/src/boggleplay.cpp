@@ -22,8 +22,6 @@ void show_board(Boggle& boggle);
 // Prompts the user to enter 16 valid English letters for a custom board.
 string get_chosen_letters(const Boggle& boggle);
 
-
-
 // Prompts the user to input a word and returns it in uppercase.
 string get_word_from_user();
 

@@ -21,7 +21,7 @@ using namespace std;
 
 class Boggle {
 public:
-    const string DICTIONARY_FILE = "/Users/abdulrahmanhendieh/Kurser/tddd86/projects/labb5/boggle/res/EnglishWords.dat";
+    const string DICTIONARY_FILE = "EnglishWords.dat";
     const int MIN_WORD_LENGTH = 4;
     const int BOARD_SIZE = 4;
 
