@@ -88,7 +88,7 @@ bool Boggle::human_word_is_in_board(const string& word) const{
 
     for (int row = 0; row < BOARD_SIZE; row++){
         for (int col = 0; col < BOARD_SIZE; col++){
-            if (search_human_helper_func(word, row, col, marked_currently_used_letters)){
+            if (search_human_word_helper_func(word, row, col, marked_currently_used_letters)){
                 return true;
 
             }
@@ -98,7 +98,7 @@ bool Boggle::human_word_is_in_board(const string& word) const{
 
 }
 
-bool Boggle::search_human_helper_func(const string& word, int row, int col, Grid<bool>& marked_letters) const {
+bool Boggle::search_human_word_helper_func(const string& word, int row, int col, Grid<bool>& marked_letters) const {
 
     if (word.empty()){
         return true;
@@ -117,7 +117,7 @@ bool Boggle::search_human_helper_func(const string& word, int row, int col, Grid
     for (int dr = -1; dr <= 1; dr++){
         for (int dc = -1; dc <= 1; dc++){
             if (!(dr == 0 && dc == 0)){
-                if (search_human_helper_func(word.substr(1), row + dr, col + dc, marked_letters )){
+                if (search_human_word_helper_func(word.substr(1), row + dr, col + dc, marked_letters )){
                     return true;
                 }
 
@@ -134,14 +134,14 @@ void Boggle::search_computer_word_in_board(){
     Grid<bool> marked_letters(BOARD_SIZE, BOARD_SIZE);
     for (int row = 0; row < BOARD_SIZE; row++){
         for (int col = 0; col < BOARD_SIZE; col++){
-            search_computer_helper_func(row, col, marked_letters, "");
+            search_computer_words_helper_func(row, col, marked_letters, "");
         }
     }
 
 }
 
 
-void Boggle::search_computer_helper_func(int row, int col,  Grid<bool>& marked_letters, string  current_word){
+void Boggle::search_computer_words_helper_func(int row, int col,  Grid<bool>& marked_letters, string  current_word){
 
     if (!board.inBounds(row, col) || marked_letters[row][col]){
         return;
@@ -164,7 +164,7 @@ void Boggle::search_computer_helper_func(int row, int col,  Grid<bool>& marked_l
         for (int dc = -1; dc <= 1; dc++){
             if (!(dr == 0 && dc == 0)){
 
-                search_computer_helper_func(row + dr, col + dc, marked_letters, current_word);
+                search_computer_words_helper_func(row + dr, col + dc, marked_letters, current_word);
             }
 
         }

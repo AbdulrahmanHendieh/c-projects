@@ -89,10 +89,10 @@ private:
 
 
     // Recursive helper using backtracking to verify if a word can be formed from (ro, col).
-    bool search_human_helper_func(const string& word,int row,int col, Grid<bool>& marked_letters) const ;
+    bool search_human_word_helper_func(const string& word,int row,int col, Grid<bool>& marked_letters) const ;
 
     // Recursive helper using backtracking and prefix pruning to collect all valid words from (row, col).
-    void search_computer_helper_func(int row,int col, Grid<bool>& marked_letters, string current_word);
+    void search_computer_words_helper_func(int row,int col, Grid<bool>& marked_letters, string current_word);
 
 
 };
